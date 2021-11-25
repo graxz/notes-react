@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import ListNotes from './components/list_notes/list_notes.jsx';
+import Form from './components/form/form.jsx';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.notes = []
+    this.state = {
+      notes: []
+    }
+  }
+
+  createNote(title, notes) {
+    const newNote = { title, notes }
+    const newArrNotes = [...this.state.notes, newNote]
+    const newState = { 
+      notes: newArrNotes
+     }
+    this.setState(newState)
+  }
+
+  render() {
+    return (
+      <section>
+        <Form createNote={this.createNote.bind(this)}/>
+        <ListNotes notes={this.state.notes}/>
+      </section>
+    )
+  }
+};
 
 export default App;
