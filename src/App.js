@@ -1,30 +1,35 @@
 import React, { Component } from 'react';
 import ListNotes from './components/list_notes/list_notes.jsx';
 import Form from './components/form/form.jsx';
+import ListCategories from './components/listCategories/list_categories.jsx';
+import Categories from './data/categories'
+import Notes from './data/notes'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.notes = []
-    this.state = {
-      notes: []
-    }
-  }
+  constructor() {
+    super();
 
-  createNote(title, notes) {
-    const newNote = { title, notes }
-    const newArrNotes = [...this.state.notes, newNote]
-    const newState = { 
-      notes: newArrNotes
-     }
-    this.setState(newState)
+    this.categories = new Categories()
+    this.notes = new Notes()
   }
 
   render() {
     return (
       <section>
-        <Form createNote={this.createNote.bind(this)}/>
-        <ListNotes notes={this.state.notes}/>
+        <Form 
+          categories={this.categories} 
+          createNote={this.notes.addNote.bind(this.notes)}
+        />
+        <main className="principal">
+          <ListCategories
+            addCategory={this.categories.addCategory.bind(this.categories)}
+            categories={this.categories}
+          />
+          <ListNotes
+          notes={this.notes}
+          deleteNote={this.notes.deleteNote.bind(this.notes)}
+        />
+        </main>
       </section>
     )
   }
